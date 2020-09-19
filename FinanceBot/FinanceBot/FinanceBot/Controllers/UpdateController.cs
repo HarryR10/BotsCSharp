@@ -2,9 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Telegram.Bot.Types;
-using TestBot.Models;
+using FinanceBot.Models;
+using FinanceBot.Models.Repository;
 
-namespace TestBot.Controllers
+namespace FinanceBot.Controllers
 {
     [ApiController]
     [Route(Settings.WebHookRoutePart)]
@@ -14,7 +15,10 @@ namespace TestBot.Controllers
         public async Task<IActionResult> Post(
             [FromServices] IConfiguration configuration,
             [FromBody] Update update,
-            [FromServices] Bot bot)
+            [FromServices] Bot bot,
+            [FromServices] IExpenseRepository expenseRepository,
+            [FromServices] IUserAccountRepository userAccountRepository,
+            [FromServices] ICategoryRepository categoryRepository)
         {
             if (update == null) return Ok();
 
@@ -28,7 +32,9 @@ namespace TestBot.Controllers
             {
                 if (command.Contains(config, message))
                 {
-                    command.Execute(message, client);
+                    command.Execute(message, client, expenseRepository,
+                        userAccountRepository, categoryRepository);
+
                     break;
                 }
                 //TODO: error handler

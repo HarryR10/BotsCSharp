@@ -14,5 +14,10 @@
     <Folder Include="Services\" />
     <Folder Include="Models\Commands\" />
     <Folder Include="Controllers\" />
+    <Folder Include="Utils\" />
+    <Folder Include="Models\EntityModels\" />
+    <Folder Include="Views\" />
+    <Folder Include="Views\Update\" />
+    <Folder Include="Models\Repository\" />
   </ItemGroup>
 </Project>

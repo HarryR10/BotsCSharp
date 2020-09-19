@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "TestBot": {
+    "FinanceBot": {
       "commandName": "Project",
       "launchUrl": "api/message/update",
       "applicationUrl": "http://localhost:8443",

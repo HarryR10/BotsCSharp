@@ -1,4 +1,4 @@
-﻿namespace TestBot
+﻿namespace FinanceBot
 {
     public class Settings
     {

@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TestBot.Models;
+using FinanceBot.Models;
+using FinanceBot.Models.Repository;
 
-namespace TestBot
+namespace FinanceBot
 {
     public class Startup
     {
@@ -21,6 +22,10 @@ namespace TestBot
             Configuration.Get<Settings>();
 
             services.AddSingleton(new Bot());
+
+            services.AddTransient<IExpenseRepository, ExpenseInMemoryRepository>();
+            services.AddTransient<IUserAccountRepository, UserAccountInMemoryRepository>();
+            services.AddTransient<ICategoryRepository, CategoryInMemoryRepository>();
 
             services
                 .AddControllers()

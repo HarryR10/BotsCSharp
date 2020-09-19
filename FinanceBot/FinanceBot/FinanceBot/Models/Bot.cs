@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Telegram.Bot;
-using TestBot.Models.Commands;
+using FinanceBot.Models.Commands;
 
-namespace TestBot.Models
+namespace FinanceBot.Models
 {
     public class Bot
     {
@@ -23,7 +23,9 @@ namespace TestBot.Models
 
             Commands = new List<ICommand>()
             {
-                new HelloCommand()
+                new HelloCommand(),
+                new HelpCommand(),
+                new StartCommand()
             };
 
             _client = new TelegramBotClient(token);
