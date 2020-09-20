@@ -42,6 +42,7 @@ namespace FinanceBot.Models.Commands
 
             var outStr = string.Format(SimpleTxtResponse.LastExpenses, tempStr);
 
+            //TODO: Telegram.Bot.Exceptions.ApiRequestException
             await client.SendTextMessageAsync(chatId, outStr);
         }
     }

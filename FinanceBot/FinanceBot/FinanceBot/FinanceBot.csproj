@@ -20,5 +20,6 @@
     <Folder Include="Models\Repository\" />
     <Folder Include="Models\Commands\ParseCommands\" />
     <Folder Include="Models\Commands\Utils\" />
+    <Folder Include="Models\CommandsException\" />
   </ItemGroup>
 </Project>
