@@ -10,7 +10,7 @@ namespace FinanceBot.Models.Repository
     {
         private IUserAccountRepository _userAccountRepository;
         private ICategoryRepository _categoryRepository;
-        private IQueryable<Expense> _expenses;
+        private List<Expense> _expenses;
 
         public ExpenseInMemoryRepository(
             [FromServices] IUserAccountRepository userAccountRepository,
@@ -30,15 +30,14 @@ namespace FinanceBot.Models.Repository
                     Amount = 12m,
                     Description = "just one Expense"
                 }
-            }.AsQueryable<Expense>();
+            };
         }
 
-        public IQueryable<Expense> Expenses => _expenses;
+        public IQueryable<Expense> Expenses => _expenses.AsQueryable<Expense>();
 
-        //TODO: fix it
         public void AddExpense(Expense expense)
         {
-            _expenses.Append(expense);
+            _expenses.Add(expense);
         }
 
         public Expense DeleteExpense(int productId)

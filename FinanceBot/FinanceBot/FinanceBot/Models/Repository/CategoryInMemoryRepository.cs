@@ -9,7 +9,7 @@ namespace FinanceBot.Models.Repository
     public class CategoryInMemoryRepository : ICategoryRepository
     {
         private IUserAccountRepository _userAccountRepository;
-        private IQueryable<Category> _categories;
+        private List<Category> _categories;
 
         public CategoryInMemoryRepository(
             [FromServices] IUserAccountRepository userAccountRepository)
@@ -26,10 +26,10 @@ namespace FinanceBot.Models.Repository
                     Author = _userAccountRepository.Accounts.FirstOrDefault(),
                     IsMounthly = false
                 }
-            }.AsQueryable<Category>();
+            };
         }
 
-        public IQueryable<Category> Categories => _categories;
+        public IQueryable<Category> Categories => _categories.AsQueryable<Category>();
 
         public void AddCategory(Category category)
         {

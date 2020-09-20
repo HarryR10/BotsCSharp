@@ -23,9 +23,14 @@ namespace FinanceBot
 
             services.AddSingleton(new Bot());
 
-            services.AddTransient<IExpenseRepository, ExpenseInMemoryRepository>();
-            services.AddTransient<IUserAccountRepository, UserAccountInMemoryRepository>();
-            services.AddTransient<ICategoryRepository, CategoryInMemoryRepository>();
+            //services.AddTransient<IExpenseRepository, ExpenseInMemoryRepository>();
+            //services.AddTransient<IUserAccountRepository, UserAccountInMemoryRepository>();
+            //services.AddTransient<ICategoryRepository, CategoryInMemoryRepository>();
+
+            //for in-memory repository:
+            services.AddSingleton<IExpenseRepository, ExpenseInMemoryRepository>();
+            services.AddSingleton<IUserAccountRepository, UserAccountInMemoryRepository>();
+            services.AddSingleton<ICategoryRepository, CategoryInMemoryRepository>();
 
             services
                 .AddControllers()
