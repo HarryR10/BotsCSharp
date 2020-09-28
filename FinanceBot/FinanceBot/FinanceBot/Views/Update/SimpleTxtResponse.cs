@@ -72,5 +72,12 @@ namespace FinanceBot.Views.Update
         //exceptions
         public static string GeneralExceptionInfo { get; } =
             "Ошибка ввода!";
+
+        //parse commands
+        public static string ChangeSalaryDay { get; } =
+            "Изменен период для расчета статистики за месяц! " +
+            "Текущий период: {0}.{1} - {2}.{3}";
+
+        //TODO: команда "дней до зарплаты"
     }
 }

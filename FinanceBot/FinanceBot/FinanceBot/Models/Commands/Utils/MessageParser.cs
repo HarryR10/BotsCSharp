@@ -27,11 +27,6 @@ namespace FinanceBot.Models.Commands.Utils
         {
             var result = new Dictionary<string, IParseCommand>();
 
-            var ddd = userAccountRepository.Accounts
-                .Where(u => u.UserId == message.From.Id);
-
-
-
             if (!userAccountRepository.Accounts
                 .Where(u => u.UserId == message.From.Id)
                 .Any())
