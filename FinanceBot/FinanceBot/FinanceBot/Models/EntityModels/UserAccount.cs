@@ -1,10 +1,13 @@
 ﻿using System;
+using FinanceBot.Models.Repository;
+
 namespace FinanceBot.Models.EntityModels
 {
     public class UserAccount
     {
         public int UserId { get; set; }
         public int SalaryDay { get; set; }
+        public DateTime CountdownDate { get; set; }
         public DateTime ResetDate { get; set; }
 
         public UserAccount(int userId, int salaryDay)
@@ -12,7 +15,7 @@ namespace FinanceBot.Models.EntityModels
             UserId = userId;
             SalaryDay = salaryDay;
 
-            //TODO:расчет ResetDate
+            this.InitUserDates();
         }
     }
 }
