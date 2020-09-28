@@ -32,7 +32,7 @@ namespace FinanceBot.Models.Commands.Utils
                 .Any())
             {
                 //дата начисления зарплаты в формате 1-2х значного числа
-                result.Add(@"^\d{1,2}$", new ChangeSalaryDateCommand());
+                result.Add(@"^\d{1,2}$", new ChangeSalaryDateCommand(userAccountRepository));
                 return result;
             }
 
@@ -50,7 +50,7 @@ namespace FinanceBot.Models.Commands.Utils
             result.Add(@"^-{1}\D+", new DelCategoryCommand());
 
             //зп12
-            result.Add(@"^зп\d{1,2}$", new ChangeSalaryDateCommand());
+            result.Add(@"^зп\d{1,2}$", new ChangeSalaryDateCommand(userAccountRepository));
 
             return result;
         }
