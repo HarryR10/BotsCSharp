@@ -22,46 +22,64 @@ namespace FinanceBot.Models.Repository
 
         public static void InitUserDates(this UserAccount userAccount)
         {
-            DateTime dayInCurrentMounth;
-            DateTime dayInNextMounth;
+            DateTime CurrentDay;
+            DateTime NextDay;
 
             //если дата зп еще не выдавали в этом месяце, начинаем считать с сегодняшней даты
             //т.е обрабатываем сразу два случая:
             //-дата еще не наступила
             //-в месяце дней меньше, чем значение SalaryDay
 
-            if (DateTime.Now.Day <= userAccount.SalaryDay)
+            if (userAccount.SalaryDay > DateTime.Now.Day)
             {
-                dayInCurrentMounth = DateTime.Now;
+                CurrentDay = DateTime.Now;
 
-                int dayToNextMounth = userAccount.SalaryDay - DateTime.Now.Day;
-                dayInNextMounth = dayInCurrentMounth.AddMonths(1);
-                try
+                int daysInCurrentMounth = DateTime.DaysInMonth(CurrentDay.Year,
+                        CurrentDay.Month);
+
+                if(userAccount.SalaryDay > daysInCurrentMounth)
                 {
-                    dayInNextMounth = dayInNextMounth.AddDays(dayToNextMounth);
+                    NextDay = new DateTime(
+                        CurrentDay.Year,
+                        CurrentDay.Month,
+                        daysInCurrentMounth);
                 }
-                catch (ArgumentException)
+                else
                 {
-                    dayInNextMounth = new DateTime(
-                        dayInNextMounth.Year,
-                        dayInNextMounth.Month,
-                        DateTime.DaysInMonth(dayInNextMounth.Year,
-                        dayInNextMounth.Month));
+                    NextDay = new DateTime(
+                        CurrentDay.Year,
+                        CurrentDay.Month,
+                        userAccount.SalaryDay);
                 }
+
+                //int dayToNextMounth = userAccount.SalaryDay - DateTime.Now.Day;
+                ////dayInNextMounth = dayInCurrentMounth.AddMonths(1);
+                //try
+                //{
+                //    NextDay = CurrentDay.AddDays(dayToNextMounth);
+                //}
+                //catch (ArgumentException)
+                //{
+                //    NextDay = new DateTime(
+                //        CurrentDay.Year,
+                //        CurrentDay.Month,
+                //        DateTime.DaysInMonth(CurrentDay.Year,
+                //        CurrentDay.Month));
+                //}
             }
             else
             {
-                dayInCurrentMounth = new DateTime(
+                CurrentDay = new DateTime(
                     DateTime.Today.Year,
                     DateTime.Today.Month,
                     userAccount.SalaryDay);
 
-                dayInNextMounth = dayInCurrentMounth.AddMonths(1);
+                NextDay = CurrentDay.AddMonths(1);
 
             }
 
-            userAccount.CountdownDate = dayInCurrentMounth;
-            userAccount.ResetDate = dayInNextMounth;
+            userAccount.CountdownDate = CurrentDay;
+            userAccount.ResetDate = NextDay;
         }
     }
 }
