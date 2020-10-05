@@ -3,6 +3,7 @@ using Telegram.Bot;
 using Telegram.Bot.Types;
 using FinanceBot.Models.Repository;
 using FinanceBot.Views.Update;
+using System.Threading.Tasks;
 
 namespace FinanceBot.Models.Commands
 {
@@ -10,7 +11,7 @@ namespace FinanceBot.Models.Commands
     {
         public string CommandName => "start";
 
-        public async void Execute(Message message,
+        public async Task<Message> Execute(Message message,
             TelegramBotClient client,
             IExpenseRepository expenseRepository,
             IUserAccountRepository userAccountRepository,
@@ -19,7 +20,7 @@ namespace FinanceBot.Models.Commands
             var userId = message.From.Id;
             var chatId = message.Chat.Id;
 
-            await client.SendTextMessageAsync(chatId,
+            return await client.SendTextMessageAsync(chatId,
                 SimpleTxtResponse.HelloUser);
         }
     }

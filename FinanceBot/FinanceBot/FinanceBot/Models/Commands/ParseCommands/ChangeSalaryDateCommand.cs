@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using FinanceBot.Models.CommandsException;
 using FinanceBot.Models.EntityModels;
 using FinanceBot.Models.Repository;
@@ -13,18 +14,12 @@ namespace FinanceBot.Models.Commands.ParseCommands
     {
         private readonly string _rgxString = @"\d{1,2}$";
         private IUserAccountRepository _userAccountRepository;
-
-
-        //TODO: refactor it:
-        //--------------------//
-        long _chatId;
-        string _msg;
-        int _usrId;
-        UserAccount _currentUser;
-        bool _isNewUser = false;
-        TelegramBotClient _client;
-        //--------------------//
-
+        private long _chatId;
+        private string _msg;
+        private int _usrId;
+        private UserAccount _currentUser;
+        private bool _isNewUser = false;
+        private TelegramBotClient _client;
 
 
         public ChangeSalaryDateCommand(
@@ -33,9 +28,7 @@ namespace FinanceBot.Models.Commands.ParseCommands
             _userAccountRepository = userAccountRepository;
         }
 
-
-        //--------------------//
-        public void Execute(Message message, TelegramBotClient client)
+        public async Task<Message> Execute(Message message, TelegramBotClient client)
         {
             _chatId = message.Chat.Id;
             _msg = message.Text;
@@ -49,7 +42,34 @@ namespace FinanceBot.Models.Commands.ParseCommands
                 && salaryDay <= 31
                 && salaryDay > 0)
             {
-                SendMsg(salaryDay);
+                //SendMsg(salaryDay);
+                if (_userAccountRepository.GetUser(_usrId,
+                    out UserAccount userAccount))
+                {
+                    _currentUser = userAccount;
+
+                    _currentUser.SalaryDay = salaryDay;
+                    _currentUser.InitUserDates();
+                }
+                else
+                {
+                    _currentUser = new UserAccount(_usrId, salaryDay);
+                    _userAccountRepository.AddAccount(_currentUser);
+                    _isNewUser = true;
+                }
+
+                var msgToUser = string.Format(SimpleTxtResponse.ChangeSalaryDay,
+                        _currentUser.CountdownDate.Day.ToString(),
+                        _currentUser.CountdownDate.Month.ToString(),
+                        _currentUser.ResetDate.Day.ToString(),
+                        _currentUser.ResetDate.Month.ToString());
+
+                if (_isNewUser)
+                {
+                    msgToUser += "\n\n" + SimpleTxtResponse.HelloUser;
+                }
+
+                return await _client.SendTextMessageAsync(_chatId, msgToUser);
             }
             else
             {
@@ -57,38 +77,38 @@ namespace FinanceBot.Models.Commands.ParseCommands
             }
         }
 
-        private async void SendMsg(int salaryDay)
-        {
-            if (_userAccountRepository.GetUser(_usrId,
-                    out UserAccount userAccount))
-            {
-                _currentUser = userAccount;
+        //private async void SendMsg(int salaryDay)
+        //{
+        //    if (_userAccountRepository.GetUser(_usrId,
+        //            out UserAccount userAccount))
+        //    {
+        //        _currentUser = userAccount;
 
-                _currentUser.SalaryDay = salaryDay;
-                _currentUser.InitUserDates();
+        //        _currentUser.SalaryDay = salaryDay;
+        //        _currentUser.InitUserDates();
 
-                
-            }
-            else
-            {
-                _currentUser = new UserAccount(_usrId, salaryDay);
-                _userAccountRepository.AddAccount(_currentUser);
-                _isNewUser = true;
-            }
 
-            await _client.SendTextMessageAsync(_chatId,
-            string.Format(SimpleTxtResponse.ChangeSalaryDay,
-            _currentUser.CountdownDate.Day.ToString(),
-            _currentUser.CountdownDate.Month.ToString(),
-            _currentUser.ResetDate.Day.ToString(),
-            _currentUser.ResetDate.Month.ToString()));
+        //    }
+        //    else
+        //    {
+        //        _currentUser = new UserAccount(_usrId, salaryDay);
+        //        _userAccountRepository.AddAccount(_currentUser);
+        //        _isNewUser = true;
+        //    }
 
-            if (_isNewUser)
-            {
-                await _client.SendTextMessageAsync(_chatId,
-                SimpleTxtResponse.HelloUser);
-            }
-        }
+        //    await _client.SendTextMessageAsync(_chatId,
+        //    string.Format(SimpleTxtResponse.ChangeSalaryDay,
+        //    _currentUser.CountdownDate.Day.ToString(),
+        //    _currentUser.CountdownDate.Month.ToString(),
+        //    _currentUser.ResetDate.Day.ToString(),
+        //    _currentUser.ResetDate.Month.ToString()));
+
+        //    if (_isNewUser)
+        //    {
+        //        await _client.SendTextMessageAsync(_chatId,
+        //        SimpleTxtResponse.HelloUser);
+        //    }
+        //}
         //--------------------//
 
         //public async void Execute(Message message, TelegramBotClient client)

@@ -50,7 +50,7 @@ namespace FinanceBot.Controllers
             {
                 if (command.Contains(config, message))
                 {
-                    command.Execute(message, client, expenseRepository,
+                    await command.Execute(message, client, expenseRepository,
                         userAccountRepository, categoryRepository);
 
                     return Ok();
@@ -65,12 +65,12 @@ namespace FinanceBot.Controllers
             {
                 var parsedCommand = MessageParser
                     .ReadCommand(parseCommandDict, message);
-                parsedCommand.Execute(message, client);
+                await parsedCommand.Execute(message, client);
             }
             catch (ParseCommandException e)
             {
                 var badCommand = new BadCommand(e);
-                badCommand.Execute(message, client);
+                await badCommand.Execute(message, client);
             }
 
             return Ok();
