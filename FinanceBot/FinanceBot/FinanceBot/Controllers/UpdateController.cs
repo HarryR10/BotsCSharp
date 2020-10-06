@@ -48,7 +48,9 @@ namespace FinanceBot.Controllers
             }
 
             var parseCommandDict = MessageParser
-                .ComposeParseCommandDict(message, userAccountRepository);
+                .ComposeParseCommandDict(message,
+                    userAccountRepository,
+                    categoryRepository);
 
             //TODO: Exeption handlers
             try

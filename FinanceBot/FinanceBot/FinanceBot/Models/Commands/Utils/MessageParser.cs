@@ -23,7 +23,8 @@ namespace FinanceBot.Models.Commands.Utils
         /// <returns></returns>
         public static Dictionary<string, IParseCommand> ComposeParseCommandDict(
             Message message,
-            IUserAccountRepository userAccountRepository)
+            IUserAccountRepository userAccountRepository,
+            ICategoryRepository categoryRepository)
         {
             var result = new Dictionary<string, IParseCommand>();
 
@@ -32,7 +33,9 @@ namespace FinanceBot.Models.Commands.Utils
                 .Any())
             {
                 //дата начисления зарплаты в формате 1-2х значного числа
-                result.Add(@"^\d{1,2}$", new ChangeSalaryDateCommand(userAccountRepository));
+                result.Add(@"^\d{1,2}$",
+                    new ChangeSalaryDateCommand(userAccountRepository));
+
                 return result;
             }
 
@@ -44,13 +47,15 @@ namespace FinanceBot.Models.Commands.Utils
             //обед
             //связь телефон!
             //связь!
-            result.Add(@"^[^\/]\D+(\s+|\s+.*)\!?$", new AddCategoryCommand());
+            result.Add(@"^[^\/\s]\D+(\s?|\s+.*)\!?$",
+                new AddCategoryCommand(userAccountRepository, categoryRepository));
 
             //-обед
             result.Add(@"^-{1}\D+", new DelCategoryCommand());
 
             //зп12
-            result.Add(@"^зп\d{1,2}$", new ChangeSalaryDateCommand(userAccountRepository));
+            result.Add(@"^зп\d{1,2}$",
+                new ChangeSalaryDateCommand(userAccountRepository));
 
             return result;
         }
