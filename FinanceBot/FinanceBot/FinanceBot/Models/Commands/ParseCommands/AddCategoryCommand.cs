@@ -18,9 +18,5 @@ namespace FinanceBot.Models.Commands.ParseCommands
                 "It's AddCategoryCommand!", replyToMessageId: messageId);
         }
 
-        //public void Execute(Message message, TelegramBotClient client, IExpenseRepository expenseRepository, IUserAccountRepository userAccountRepository, ICategoryRepository categoryRepository)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

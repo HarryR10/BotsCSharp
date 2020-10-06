@@ -35,16 +35,6 @@ namespace FinanceBot.Controllers
             var client = await bot.Get(config);
 
             //TODO: обновление даты (new IinternalCommand ?)
-            //TODO: разработать функцию обновления даты -
-            //если дата предыдущего меньше SalaryDay - пытаться брать сначала SalaryDay, иначе последний день месяца
-            //
-            //if(dayInNextMounth.Day != dayInCurrentMounth.Day)
-            //{
-            //    dayInNextMounth = new DateTime(
-            //        dayInNextMounth.Year,
-            //        dayInNextMounth.Month,
-            //        DateTime.DaysInMonth(dayInNextMounth.Year, dayInNextMounth.Month));
-            //}
 
             foreach (var command in commands)
             {

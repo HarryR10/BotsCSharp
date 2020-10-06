@@ -25,7 +25,7 @@ namespace FinanceBot.Models.Repository
             DateTime CurrentDay;
             DateTime NextDay;
 
-            //если дата зп еще не выдавали в этом месяце, начинаем считать с сегодняшней даты
+            //если зп еще не выдавали в этом месяце, начинаем считать с сегодняшней даты
             //т.е обрабатываем сразу два случая:
             //-дата еще не наступила
             //-в месяце дней меньше, чем значение SalaryDay
@@ -51,21 +51,6 @@ namespace FinanceBot.Models.Repository
                         CurrentDay.Month,
                         userAccount.SalaryDay);
                 }
-
-                //int dayToNextMounth = userAccount.SalaryDay - DateTime.Now.Day;
-                ////dayInNextMounth = dayInCurrentMounth.AddMonths(1);
-                //try
-                //{
-                //    NextDay = CurrentDay.AddDays(dayToNextMounth);
-                //}
-                //catch (ArgumentException)
-                //{
-                //    NextDay = new DateTime(
-                //        CurrentDay.Year,
-                //        CurrentDay.Month,
-                //        DateTime.DaysInMonth(CurrentDay.Year,
-                //        CurrentDay.Month));
-                //}
             }
             else
             {
