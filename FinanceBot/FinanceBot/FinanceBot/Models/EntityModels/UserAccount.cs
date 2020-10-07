@@ -17,7 +17,7 @@ namespace FinanceBot.Models.EntityModels
             SalaryDay = salaryDay;
             //DateAdded = DateTime.Now;
 
-            this.InitUserDates();
+            this.InitUserDates(salaryDay);
         }
     }
 }

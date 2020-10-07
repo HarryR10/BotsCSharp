@@ -33,7 +33,7 @@ namespace FinanceBot.Models.Repository
 
         public IQueryable<Category> Categories => _categories.AsQueryable<Category>();
 
-        public void AddCategory(Category category)
+        public void AddCategory(Category category, UserAccount userAccount)
         {
         }
 

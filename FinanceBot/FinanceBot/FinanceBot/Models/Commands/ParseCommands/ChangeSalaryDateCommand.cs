@@ -46,9 +46,7 @@ namespace FinanceBot.Models.Commands.ParseCommands
                     out UserAccount userAccount))
                 {
                     _currentUser = userAccount;
-
-                    _currentUser.SalaryDay = salaryDay;
-                    _currentUser.InitUserDates();
+                    _currentUser.InitUserDates(salaryDay);
                 }
                 else
                 {

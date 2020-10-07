@@ -9,7 +9,7 @@ namespace FinanceBot.Models.Repository
     {
         IQueryable<Category> Categories { get; }
 
-        void AddCategory(Category category);
+        void AddCategory(Category category, UserAccount userAccount);
         //Task<bool> AddCategory(Category category);
 
         Category DeleteCategory(int categoryId);

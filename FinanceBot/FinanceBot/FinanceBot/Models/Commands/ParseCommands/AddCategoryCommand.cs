@@ -78,7 +78,7 @@ namespace FinanceBot.Models.Commands.ParseCommands
                         .Where(u => u.UserId == _usrId)
                         .FirstOrDefault(),
                     IsMounthly = isMounthly
-                });
+                }, userAccount);
 
             return await _client.SendTextMessageAsync(_chatId,
                 string.Format(SimpleTxtResponse.AddCategory, categoryName));

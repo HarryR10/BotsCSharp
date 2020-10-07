@@ -20,7 +20,8 @@ namespace FinanceBot.Models.Repository
             return true;
         }
 
-        public static void InitUserDates(this UserAccount userAccount)
+        public static void InitUserDates(this UserAccount userAccount,
+            int salaryDay = default)
         {
             DateTime CurrentDay;
             DateTime NextDay;
