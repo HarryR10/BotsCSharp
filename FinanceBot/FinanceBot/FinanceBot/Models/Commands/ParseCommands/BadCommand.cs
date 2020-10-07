@@ -11,7 +11,7 @@ namespace FinanceBot.Models.Commands.ParseCommands
     {
         private string _errorMsg;
 
-        public BadCommand(ParseCommandException exception)
+        public BadCommand(CommandExeption exception)
         {
             _errorMsg = exception.BadCommand;
         }

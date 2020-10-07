@@ -14,7 +14,6 @@ namespace FinanceBot.Models.Repository
 
         public void AddAccount(UserAccount account)
         {
-            throw new NotImplementedException();
         }
 
         public UserAccount DeleteAccount(int userId)

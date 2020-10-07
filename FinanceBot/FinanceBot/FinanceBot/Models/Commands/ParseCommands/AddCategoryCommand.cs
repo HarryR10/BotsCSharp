@@ -34,7 +34,11 @@ namespace FinanceBot.Models.Commands.ParseCommands
             _usrId = message.From.Id;
             _client = client;
 
-            //TODO: проверка наличия юзера в базе
+            if (!_userAccountRepository.GetUser(_usrId,
+                    out UserAccount userAccount))
+            {
+                throw new UserNotFoundException(_msg, _usrId);
+            }
 
             bool isMounthly = false;
             string cleanCmd;

@@ -59,7 +59,7 @@ namespace FinanceBot.Controllers
                     .ReadCommand(parseCommandDict, message);
                 await parsedCommand.Execute(message, client);
             }
-            catch (ParseCommandException e)
+            catch (CommandExeption e)
             {
                 var badCommand = new BadCommand(e);
                 await badCommand.Execute(message, client);
