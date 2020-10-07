@@ -70,7 +70,7 @@ namespace FinanceBot.Models.Commands.ParseCommands
                         .Where(c => c.Author.UserId == _usrId)
                         .Select(c => c.CategoryId)
                         .OrderByDescending(catId => catId)
-                        .FirstOrDefault(),
+                        .FirstOrDefault() + 1,
                     Description = cleanCmd,
                     IsBasic = false,
                     Author =
