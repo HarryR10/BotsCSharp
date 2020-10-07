@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FinanceBot.Models.CommandsException;
 using FinanceBot.Models.EntityModels;
 
 namespace FinanceBot.Models.Repository

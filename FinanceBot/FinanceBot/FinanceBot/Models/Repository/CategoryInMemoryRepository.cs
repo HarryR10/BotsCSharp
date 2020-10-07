@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using FinanceBot.Models.EntityModels;
 using System.Threading.Tasks;
+using FinanceBot.Models.CommandsException;
 
 namespace FinanceBot.Models.Repository
 {
@@ -34,20 +35,7 @@ namespace FinanceBot.Models.Repository
 
         public void AddCategory(Category category)
         {
-            //throw new NotImplementedException();
-            //return await new Task<bool>(()=> true);
         }
-
-        //public async Task<bool> AddCategory(
-        //    string categoryName,
-        //    int categoryId,
-        //    string description,
-        //    bool isBasic,
-        //    UserAccount author,
-        //    bool isMounthly)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         public Category DeleteCategory(int categoryId)
         {

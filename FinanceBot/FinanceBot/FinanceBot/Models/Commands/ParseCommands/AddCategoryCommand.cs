@@ -6,6 +6,8 @@ using FinanceBot.Models.EntityModels;
 using FinanceBot.Models.Repository;
 using Telegram.Bot;
 using Telegram.Bot.Types;
+using FinanceBot.Models.CommandsException;
+using FinanceBot.Views.Update;
 
 namespace FinanceBot.Models.Commands.ParseCommands
 {
@@ -79,7 +81,7 @@ namespace FinanceBot.Models.Commands.ParseCommands
                 });
 
             return await _client.SendTextMessageAsync(_chatId,
-                string.Format("Категория \'{0}\' добавлена!", categoryName));
+                string.Format(SimpleTxtResponse.AddCategory, categoryName));
         }
     }
 }

@@ -69,6 +69,9 @@ namespace FinanceBot.Views.Update
         public static string Categories { get; } =
             "Категории расходов:\n\n {0}";
 
+        public static string AddCategory { get; } =
+            "Категория \'{0}\' добавлена!";
+
         //exceptions
         public static string GeneralExceptionInfo { get; } =
             "Ошибка ввода!";
