@@ -1,13 +1,11 @@
 ﻿using System;
 namespace FinanceBot.Models.CommandsException
 {
-    public class ParseCommandException : Exception
+    public class ParseCommandException : CommandExeption
     {
-        public string BadCommand { get; }
-
         public ParseCommandException(string badCommand)
         {
-            BadCommand = badCommand;
+            base.BadCommand = badCommand;
         }
     }
 }
