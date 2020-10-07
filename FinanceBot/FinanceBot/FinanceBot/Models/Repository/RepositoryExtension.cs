@@ -23,6 +23,14 @@ namespace FinanceBot.Models.Repository
         public static void InitUserDates(this UserAccount userAccount,
             int salaryDay = default)
         {
+            if (salaryDay != default)
+            {
+                lock (userAccount.GetLock)
+                {
+                    userAccount.SalaryDay = salaryDay;
+                } 
+            }
+
             DateTime CurrentDay;
             DateTime NextDay;
 
@@ -64,8 +72,11 @@ namespace FinanceBot.Models.Repository
 
             }
 
-            userAccount.CountdownDate = CurrentDay;
-            userAccount.ResetDate = NextDay;
+            lock (userAccount.GetLock)
+            {
+                userAccount.CountdownDate = CurrentDay;
+                userAccount.ResetDate = NextDay;
+            }
         }
     }
 }

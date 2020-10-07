@@ -11,6 +11,9 @@ namespace FinanceBot.Models.EntityModels
         public DateTime ResetDate { get; set; }
         //public DateTime DateAdded { get; }
 
+        private object _lock = new object();
+        public object GetLock => _lock;
+
         public UserAccount(int userId, int salaryDay)
         {
             UserId = userId;

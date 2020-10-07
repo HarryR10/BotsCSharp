@@ -35,6 +35,18 @@ namespace FinanceBot.Models.Repository
 
         public void AddCategory(Category category, UserAccount userAccount)
         {
+            lock (userAccount.GetLock)
+            {
+                if(!Categories.Where(c => c.CategoryId == category.CategoryId)
+                    .Any())
+                {
+                    _categories.Add(category);
+                }
+                else
+                {
+                    throw new CategoryAlredyExistException(category.CategoryId);
+                }
+            }
         }
 
         public Category DeleteCategory(int categoryId)
