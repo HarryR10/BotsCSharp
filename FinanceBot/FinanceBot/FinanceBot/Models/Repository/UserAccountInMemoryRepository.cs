@@ -8,12 +8,17 @@ namespace FinanceBot.Models.Repository
 {
     public class UserAccountInMemoryRepository : IUserAccountRepository
     {
-        public IQueryable<UserAccount> Accounts => new List<UserAccount>()
         private object _lock = new object();
 
+        private List<UserAccount> _accounts = new List<UserAccount>
         {
             new UserAccount(1, 1)
-        }.AsQueryable<UserAccount>();
+        };
+
+        public IQueryable<UserAccount> Accounts =>
+            _accounts.AsQueryable<UserAccount>();
+            
+
 
         public void AddAccount(UserAccount account)
         {
