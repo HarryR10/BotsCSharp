@@ -1,4 +1,6 @@
 ﻿using System;
+using FinanceBot.Views.Update;
+
 namespace FinanceBot.Models.CommandsException
 {
     public class UserAlredyExistException : CommandExeption
@@ -6,7 +8,7 @@ namespace FinanceBot.Models.CommandsException
         public UserAlredyExistException(int userId)
         {
             base.BadCommand = string
-                .Format("Пользователь с id{0} уже существует!", userId);
+                .Format(SimpleTxtResponse.UserAlredyExist, userId);
         }
     }
 }

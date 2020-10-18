@@ -1,12 +1,14 @@
 ﻿using System;
+using FinanceBot.Views.Update;
+
 namespace FinanceBot.Models.CommandsException
 {
     public class CategoryAlredyExistException : CommandExeption
     {
-        public CategoryAlredyExistException(int categoryId)
+        public CategoryAlredyExistException(string categoryName)
         {
             base.BadCommand = string
-                .Format("Категория с id{0} уже существует!", categoryId);
+                .Format(SimpleTxtResponse.CategoryAlredyExist, categoryName);
         }
     }
 }

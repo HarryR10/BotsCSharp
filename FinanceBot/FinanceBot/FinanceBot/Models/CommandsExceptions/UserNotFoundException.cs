@@ -1,4 +1,6 @@
 ﻿using System;
+using FinanceBot.Views.Update;
+
 namespace FinanceBot.Models.CommandsException
 {
     public class UserNotFoundException : CommandExeption
@@ -6,7 +8,7 @@ namespace FinanceBot.Models.CommandsException
         public UserNotFoundException(string message, int userId)
         {
             base.BadCommand = string
-                .Format("{0}: пользователь с id{1} не зарегистрирован!",
+                .Format(SimpleTxtResponse.UserNotFound,
                 message, userId);
         }
     }
