@@ -78,5 +78,17 @@ namespace FinanceBot.Models.Repository
                 userAccount.ResetDate = NextDay;
             }
         }
+
+        public static Category GetCategory(this ICategoryRepository categoryRepository,
+            UserAccount user,
+            string name)
+        {
+            return categoryRepository
+                .Categories
+                .Where(c => c.Author == user
+                    && c.CategoryName == name
+                    && !c.IsBasic)
+                .FirstOrDefault();
+        }
     }
 }

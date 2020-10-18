@@ -12,6 +12,6 @@ namespace FinanceBot.Models.Repository
         void AddCategory(Category category, UserAccount userAccount);
         //Task<bool> AddCategory(Category category);
 
-        Category DeleteCategory(int categoryId);
+        Category DeleteCategory(Category category);
     }
 }

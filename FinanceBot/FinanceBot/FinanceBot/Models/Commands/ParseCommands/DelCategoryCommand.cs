@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using FinanceBot.Models.CommandsException;
+using FinanceBot.Models.CommandsExceptions;
+using FinanceBot.Models.EntityModels;
 using FinanceBot.Models.Repository;
+using FinanceBot.Views.Update;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
@@ -8,18 +13,55 @@ namespace FinanceBot.Models.Commands.ParseCommands
 {
     public class DelCategoryCommand : IParseCommand
     {
-        public async Task<Message> Execute(Message message, TelegramBotClient client)
-        {
-            var chatId = message.Chat.Id;
-            var messageId = message.MessageId;
+        private readonly string _rgxString = @"^[^-]\D+";
+        private IUserAccountRepository _userAccountRepository;
+        private ICategoryRepository _categoryRepository;
+        private long _chatId;
+        private string _msg;
+        private int _usrId;
+        private TelegramBotClient _client;
 
-            return await client.SendTextMessageAsync(chatId,
-                "It's DelCategoryCommand!", replyToMessageId: messageId);
+        public DelCategoryCommand(IUserAccountRepository userAccountRepository,
+            ICategoryRepository categoryRepository)
+        {
+            _userAccountRepository = userAccountRepository;
+            _categoryRepository = categoryRepository;
         }
 
-        //public void Execute(Message message, TelegramBotClient client, IExpenseRepository expenseRepository, IUserAccountRepository userAccountRepository, ICategoryRepository categoryRepository)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public async Task<Message> Execute(Message message, TelegramBotClient client)
+        {
+            _chatId = message.Chat.Id;
+            _msg = message.Text;
+            _usrId = message.From.Id;
+            _client = client;
+
+            if (!_userAccountRepository.GetUser(_usrId,
+                    out UserAccount userAccount))
+            {
+                throw new UserNotFoundException(_msg, _usrId);
+            }
+
+            Regex regex = new Regex(_rgxString);
+            Match match = regex.Match(_msg);
+
+            if (match.Success)
+            {
+                var currentCategory = _categoryRepository
+                    .GetCategory(userAccount, match.Value);
+
+                if (currentCategory != null)
+                {
+                    _categoryRepository.DeleteCategory(currentCategory);
+                }
+            }
+            else
+            {
+                throw new CategoryNotFoundException(_msg);
+            }
+
+            return await client.SendTextMessageAsync(_chatId,
+                string.Format(SimpleTxtResponse.DelCategory, match.Value));
+        }
+
     }
 }

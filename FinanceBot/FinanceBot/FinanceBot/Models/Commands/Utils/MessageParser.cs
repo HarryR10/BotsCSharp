@@ -24,7 +24,8 @@ namespace FinanceBot.Models.Commands.Utils
         public static Dictionary<string, IParseCommand> ComposeParseCommandDict(
             Message message,
             IUserAccountRepository userAccountRepository,
-            ICategoryRepository categoryRepository)
+            ICategoryRepository categoryRepository,
+            IExpenseRepository expenseRepository)
         {
             var result = new Dictionary<string, IParseCommand>();
 
@@ -41,7 +42,8 @@ namespace FinanceBot.Models.Commands.Utils
 
             //100 проезд на такси
             //100 проезд
-            result.Add(@"^[^\/]\d+\s+.+", new AddExpenseCommand());
+            result.Add(@"^[^\/]\d+\s+.+", new AddExpenseCommand(userAccountRepository,
+                categoryRepository, expenseRepository));
 
             //обед бизнес-ланч, кафе
             //обед
@@ -51,7 +53,7 @@ namespace FinanceBot.Models.Commands.Utils
                 new AddCategoryCommand(userAccountRepository, categoryRepository));
 
             //-обед
-            result.Add(@"^-{1}\D+", new DelCategoryCommand());
+            result.Add(@"^-{1}\D+", new DelCategoryCommand(userAccountRepository, categoryRepository));
 
             //зп12
             result.Add(@"^зп\d{1,2}$",

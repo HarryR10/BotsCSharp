@@ -21,9 +21,9 @@ namespace FinanceBot.Models.Repository
             {
                 new Category
                 {
-                    CategoryName = "taxi",
+                    CategoryName = "other",
                     CategoryId = 1,
-                    Description = "просто категория",
+                    Description = "общая категория",
                     IsBasic = false,
                     Author = _userAccountRepository.Accounts.FirstOrDefault(),
                     IsMounthly = false
@@ -44,12 +44,12 @@ namespace FinanceBot.Models.Repository
                 }
                 else
                 {
-                    throw new CategoryAlredyExistException(category.CategoryId);
+                    throw new CategoryAlredyExistException(category.CategoryName);
                 }
             }
         }
 
-        public Category DeleteCategory(int categoryId)
+        public Category DeleteCategory(Category category)
         {
             throw new NotImplementedException();
         }
