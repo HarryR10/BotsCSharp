@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using FinanceBot.Models.CommandsException;
+using FinanceBot.Views.Update;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
@@ -16,13 +17,15 @@ namespace FinanceBot.Models.Commands.ParseCommands
             _errorMsg = exception.BadCommand;
         }
 
-        public async Task<Message> Execute(Message message, TelegramBotClient client)
+        public async Task<Message> Execute(Message message,
+            TelegramBotClient client)
         {
             var chatId = message.Chat.Id;
             var messageId = message.MessageId;
 
             return await client.SendTextMessageAsync(chatId,
-                string.Format(@"{0} - it's BadCommand", _errorMsg), replyToMessageId: messageId);
+                string.Format(SimpleTxtResponse.GeneralExceptionInfo, _errorMsg),
+                replyToMessageId: messageId);
         }
     }
 }
