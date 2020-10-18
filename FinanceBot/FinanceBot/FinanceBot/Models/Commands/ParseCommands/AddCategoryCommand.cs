@@ -76,7 +76,8 @@ namespace FinanceBot.Models.Commands.ParseCommands
                     Author =
                         _userAccountRepository.Accounts
                         .Where(u => u.UserId == _usrId)
-                        .FirstOrDefault(),
+                        //TODO: FirstOrDefault / First?
+                        .FirstOrDefault(),  
                     IsMounthly = isMounthly
                 }, userAccount);
 

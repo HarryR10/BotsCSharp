@@ -84,7 +84,7 @@ namespace FinanceBot.Models.Commands.Utils
 
             if (currentCommands.Count() != 0)
             {
-                return currentCommands.FirstOrDefault();
+                return currentCommands.First();
             }
 
             throw new ParseCommandException(msg);
